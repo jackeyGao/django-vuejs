@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ room.label }}</h1>
+    <table>
+    {% for message in messages %}
+      <tr>
+        <td>{{ message.timestamp }}</td>
+        <td>{{ message.username }}</td>
+        <td>{{ message.message }}</td>
+      </tr> 
+    {% endfor %}
+    <tr>
+      <td>Say something:</td>
+      <td><input id="username" type="text" placeholder="your name"></td>
+      <td>
+        <input id="message" type="text" placeholder="message">
+        <button id="go">Say it</button>
+      </td>
+    </table>
+{% endblock content %}
