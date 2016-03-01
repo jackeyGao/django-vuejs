@@ -1,0 +1,5 @@
+Random notes and stuff, likely to become feedback to Andrew:
+
+- static files is weird. how should it work in prod? WhiteNoise-ish would be
+  ideal; integrate with Daphe?
+- channel backend - parse from URL?

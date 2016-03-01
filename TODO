@@ -1,0 +1,6 @@
+- websockets duh
+- include old-school django POST view?
+    might make a good flow for the article, start with old-style and then add WSS
+- channels backend shouild use config var (URL-ish?
+- test deploy to heroku
+

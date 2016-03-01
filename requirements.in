@@ -2,5 +2,4 @@ Django
 channels
 dj-database-url
 psycopg2
-whitenoise
 asgi_redis
