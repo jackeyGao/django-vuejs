@@ -3,4 +3,7 @@
     might make a good flow for the article, start with old-style and then add WSS
 - channels backend shouild use config var (URL-ish?
 - test deploy to heroku
-
+- give rooms a name 
+    - and let people change them -- would demonstrate different kinds of messages
+- rename Message.username to Message.handle?
+- reorganize code - ideally the chat app should be semi-reusable

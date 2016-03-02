@@ -3,3 +3,9 @@ Random notes and stuff, likely to become feedback to Andrew:
 - static files is weird. how should it work in prod? WhiteNoise-ish would be
   ideal; integrate with Daphe?
 - channel backend - parse from URL?
+- "routing" in websockets is weird - there's a path, but realy only a single
+  consumer. some sort of url-ish routing perhaps?
+
+        websocket.connect -> path dispatch -> websocket.connect.{path} channel
+
+- debugging errors in websocket consumers SUCKS
