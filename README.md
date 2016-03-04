@@ -11,9 +11,10 @@ Or, manual instructions:
 
 - create app
 - addons: postgres, redis
-- settings: DATABASE_URL, SECRET_KEY
-- deploy
-- migrate
+- settings: SECRET_KEY
+- `git push heroku master`
+- `heroku run python manage.py migrate`
+- `heroku ps:scale web=1:free worker=1:free`
 
 ## Running locally
 
