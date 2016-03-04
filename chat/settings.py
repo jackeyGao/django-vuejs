@@ -99,7 +99,6 @@ STATICFILES_DIRS = [
 ]
 
 # Channel settings
-# FIXME: read from env
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
