@@ -1,4 +1,3 @@
-- channels backend shouild use config var (URL-ish?)
 - test deploy to heroku
 √ give rooms a name 
     - and let people change them
