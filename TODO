@@ -1,6 +1,8 @@
 - channels backend shouild use config var (URL-ish?)
 - test deploy to heroku
-- give rooms a name 
-    - and let people change them -- would demonstrate different kinds of messages
+√ give rooms a name 
+    - and let people change them
+- persist handles, let change them
+- work on ui/ux a bit
 - include old-school django POST view?
     might make a good flow for the article, start with old-style and then add WSS

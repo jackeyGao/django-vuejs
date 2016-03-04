@@ -3,26 +3,31 @@
 {% block content %}
   {% load staticfiles %}
   <h1>{{ room.label }}</h1>
-  <table id="chat">
-    <tbody>
-      {% for message in messages %}
-        <tr>
-          <td>{{ message.timestamp }}</td>
-          <td>{{ message.handle }}</td>
-          <td>{{ message.message }}</td>
-        </tr> 
-      {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-      <td>Say something:</td>
-      <td><input id="handle" type="text" placeholder="your name"></td>
-      <td>
-        <input id="message" type="text" placeholder="message">
-        <button id="go">Say it</button>
-      </td>
-    </tfoot>
-  </table>
+  <p>
+    <label for="handle">Your name:</label>
+    <input id="handle" type="text" placeholder="handle">
+  </p>
+  <form id="chatform">
+    <table id="chat">
+      <tbody>
+        {% for message in messages %}
+          <tr>
+            <td>{{ message.formatted_timestamp }}</td>
+            <td>{{ message.handle }}</td>
+            <td>{{ message.message }}</td>
+          </tr> 
+        {% endfor %}
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>Say something:</td>
+        <td colspan=2>
+          <input id="message" type="text" placeholder="message">
+          <button type="submit" id="go">Say it</button>
+        </td>
+      </tfoot>
+    </table>
+  </form>
 {% endblock content %}
 
 {% block afterbody %}

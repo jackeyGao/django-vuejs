@@ -12,11 +12,13 @@ $(function() {
         + '</tr>');
     };
 
-    $("#go").on("click", function(event) {
+    $("#chatform").on("submit", function(event) {
         var message = {
             handle: $('#handle').val(),
             message: $('#message').val(),
         }
         chatsock.send(JSON.stringify(message));
+        $("#message").val('').focus();
+        return false;
     });
 });

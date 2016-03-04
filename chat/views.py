@@ -25,14 +25,17 @@ def chat_room(request, label):
     """
     Room view - show the room, with latest messages.
 
-    If the room with the given label doesn't exist, automatically create it
-    (a la etherpad).
-
     The template for this view has the WebSocket business to send and stream
     messages, so see the template for where the magic happens.
     """
+    # If the room with the given label doesn't exist, automatically create it (a
+    # la etherpad).
     room, created = Room.objects.get_or_create(label=label)
+
+    # We want to show the last 50 messages, but ordered most-recent-last
+    messages = reversed(room.messages.order_by('-timestamp')[:50])
+
     return render(request, "chat/room.html", {
         'room': room,
-        'messages': room.messages.order_by('-timestamp')[:100]
+        'messages': messages,
     })
