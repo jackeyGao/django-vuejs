@@ -1,6 +1,9 @@
 √ give rooms a name 
     - and let people change them
-- persist handles, let change them
+- require handles (or auto-generate anon-y handles)
+- persist handles, let people change them
 - work on ui/ux a bit
+    - can we get a slack-ish layout, with chat at the bottom?
+    - list of people who are "here"?
 - include old-school django POST view?
     might make a good flow for the article, start with old-style and then add WSS
