@@ -1,14 +1,3 @@
-"""
-Django settings for channels_example project on Heroku. Fore more info, see:
-https://github.com/heroku/heroku-django-template
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.9/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.9/ref/settings/
-"""
-
 import os
 import random
 import string
@@ -43,7 +32,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'channels_example.urls'
+ROOT_URLCONF = 'chat.urls'
 
 TEMPLATES = (
     {
@@ -62,17 +51,11 @@ TEMPLATES = (
     },
 )
 
-WSGI_APPLICATION = 'channels_example.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(default="postgres:///channels-example", conn_max_age=500)
 }
 
 AUTH_PASSWORD_VALIDATORS = (
@@ -92,16 +75,11 @@ AUTH_PASSWORD_VALIDATORS = (
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-# Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -120,7 +98,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Channels
+# Channel settings
 # FIXME: read from env
 CHANNEL_LAYERS = {
     "default": {
@@ -128,10 +106,11 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [("localhost", 6379)],
         },
-        "ROUTING": "channels_example.routing.channel_routing",
+        "ROUTING": "chat.routing.channel_routing",
     },
 }
 
+# Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -144,7 +123,7 @@ LOGGING = {
         'django': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'DEBUG'
+            'level': 'INFO'
         },
         'chat': {
             'handlers': ['console'],

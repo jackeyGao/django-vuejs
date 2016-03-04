@@ -1,5 +1,5 @@
 from channels.staticfiles import StaticFilesConsumer
-from chat.consumers import ws_connect, ws_receive, ws_disconnect
+from . import consumers
 
 channel_routing = {
     # This makes Django serve static files from settings.STATIC_URL, similar
@@ -7,7 +7,8 @@ channel_routing = {
     # quality) but it works for a minimal example.
     'http.request': StaticFilesConsumer(),
 
-    'websocket.connect': ws_connect,
-    'websocket.receive': ws_receive,
-    'websocket.disconnect': ws_disconnect,
+    # Wire up websocket channels to our consumers:
+    'websocket.connect': consumers.ws_connect,
+    'websocket.receive': consumers.ws_receive,
+    'websocket.disconnect': consumers.ws_disconnect,
 }

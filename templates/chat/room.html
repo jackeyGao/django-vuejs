@@ -8,7 +8,7 @@
       {% for message in messages %}
         <tr>
           <td>{{ message.timestamp }}</td>
-          <td>{{ message.username }}</td>
+          <td>{{ message.handle }}</td>
           <td>{{ message.message }}</td>
         </tr> 
       {% endfor %}
@@ -16,7 +16,7 @@
     <tfoot>
     <tr>
       <td>Say something:</td>
-      <td><input id="username" type="text" placeholder="your name"></td>
+      <td><input id="handle" type="text" placeholder="your name"></td>
       <td>
         <input id="message" type="text" placeholder="message">
         <button id="go">Say it</button>

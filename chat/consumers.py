@@ -51,13 +51,13 @@ def ws_receive(message):
         log.debug("ws message isn't json text=%s", text)
         return
     
-    if set(data.keys()) != set(('username', 'message')):
+    if set(data.keys()) != set(('handle', 'message')):
         log.debug("ws message unexpected format data=%s", data)
         return
 
     if data:
-        log.debug('chat message room=%s username=%s message=%s', 
-            room.label, data['username'], data['message'])
+        log.debug('chat message room=%s handle=%s message=%s', 
+            room.label, data['handle'], data['message'])
         m = room.messages.create(**data)
         room.channel_group.send({'text': json.dumps(m.as_dict())})
 

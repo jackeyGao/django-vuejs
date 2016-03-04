@@ -2,7 +2,11 @@ import random
 import string
 from django.db import transaction
 from django.shortcuts import render, redirect
+import haikunator
 from .models import Room
+
+def about(request):
+    return render(request, "chat/about.html")
 
 def new_room(request):
     """
@@ -11,26 +15,24 @@ def new_room(request):
     new_room = None
     while not new_room:
         with transaction.atomic():
-            label = _generate_random_label(length=20)
+            label = haikunator.haikunate()
             if Room.objects.filter(label=label).exists():
                 continue
             new_room = Room.objects.create(label=label)
-    return redirect(room, label=label)
+    return redirect(chat_room, label=label)
 
-def room(request, label):
+def chat_room(request, label):
     """
     Room view - show the room, with latest messages.
+
+    If the room with the given label doesn't exist, automatically create it
+    (a la etherpad).
 
     The template for this view has the WebSocket business to send and stream
     messages, so see the template for where the magic happens.
     """
-    # Automatically create new rooms just by hitting the URL.
     room, created = Room.objects.get_or_create(label=label)
-
-    return render(request, "room.html", {
+    return render(request, "chat/room.html", {
         'room': room,
         'messages': room.messages.order_by('-timestamp')[:100]
     })
-
-def _generate_random_label(length):
-    return "".join(random.choice(string.ascii_lowercase + string.digits) for i in range(length))
