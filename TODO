@@ -7,3 +7,5 @@
     - list of people who are "here"?
 - include old-school django POST view?
     might make a good flow for the article, start with old-style and then add WSS
+- remove the room.channel_group abstraction -- it's probably better for "real" code, but it makes the example harder to read.
+- likewise, look over the article and code and simplify where possible
