@@ -1,7 +1,6 @@
-# Django Channels Example 
+# WORK IN PROGRESS - Django Channels Example 
 
-what is this? chat app example, showing that "it's still django", butt....
-see [article]
+This is a example Channels app that'll be used in an article I'm writing, to be published later in March. It's still very much a WIP; watch this space.
 
 ## Running on Heroku
 
