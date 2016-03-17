@@ -1,5 +1,12 @@
-√ give rooms a name 
-    - and let people change them
+Pre-publication
+
+- remove the room.channel_group abstraction -- it's probably better for "real" code, but it makes the example harder to read.
+- app.json / heroku button
+- update README
+
+Possible future improvements:
+
+- let people change room names
 - require handles (or auto-generate anon-y handles)
 - persist handles, let people change them
 - work on ui/ux a bit
@@ -7,6 +14,3 @@
     - list of people who are "here"?
 - include old-school django POST view?
     might make a good flow for the article, start with old-style and then add WSS
-- remove the room.channel_group abstraction -- it's probably better for "real" code, but it makes the example harder to read.
-- likewise, look over the article and code and simplify where possible
-- app.json / heroku button
