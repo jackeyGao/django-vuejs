@@ -1,0 +1,16 @@
+{
+    "name": "Django Channels Example",
+    "description": "A real-time chat app, built as a simple example of using Django Channels ",
+    "repository": "https://github.com/jacobian/channels-example",
+    "keywords": ["django", "channels", "websockets"],
+    "scripts": {
+        "postdeploy": "python manage.py migrate"
+    },
+    "env": {
+        "SECRET_KEY": {
+            "description": "Django's SECRET_KEY setting",
+            "generator": "secret"
+        }
+    },
+    "addons": ["heroku-postgresql", "heroku-redis"]
+}

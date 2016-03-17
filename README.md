@@ -4,7 +4,9 @@ This is a example Channels app that'll be used in an article I'm writing, to be 
 
 ## Running on Heroku
 
-[button]
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jacobian/channels-example)
+
+**Note:** you'll need to scale the `worker` process type up after using the button; the button won't do it for you! Use the Dashboard, or run `heroku ps:scale web=1:free worker=1:free`. 
 
 Or, manual instructions:
 
