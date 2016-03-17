@@ -1,6 +1,7 @@
 import re
 import json
 import logging
+from channels import Group
 from channels.sessions import channel_session
 from .models import Room
 
@@ -27,7 +28,7 @@ def ws_connect(message):
 
     log.debug('chat connect room=%s client=%s:%s', 
         room.label, message['client'][0], message['client'][1])
-    room.channel_group.add(message.reply_channel)
+    Group('chat-'+label).add(message.reply_channel)
     message.channel_session['room'] = room.label
 
 @channel_session
@@ -59,13 +60,13 @@ def ws_receive(message):
         log.debug('chat message room=%s handle=%s message=%s', 
             room.label, data['handle'], data['message'])
         m = room.messages.create(**data)
-        room.channel_group.send({'text': json.dumps(m.as_dict())})
+        Group('chat-'+label).send({'text': json.dumps(m.as_dict())})
 
 @channel_session
 def ws_disconnect(message):
     try:
         label = message.channel_session['room']
         room = Room.objects.get(label=label)
-        room.channel_group.discard(message.reply_channel)
+        Group('chat-'+label).discard(message.reply_channel)
     except (KeyError, Room.DoesNotExist):
         pass

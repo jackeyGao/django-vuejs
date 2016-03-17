@@ -1,9 +1,3 @@
-Pre-publication
-
-- remove the room.channel_group abstraction -- it's probably better for "real" code, but it makes the example harder to read.
-√ app.json / heroku button
-- update README
-
 Possible future improvements:
 
 - let people change room names
