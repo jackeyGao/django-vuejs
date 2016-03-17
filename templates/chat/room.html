@@ -3,6 +3,10 @@
 {% block content %}
   {% load staticfiles %}
   <h1>{{ room.label }}</h1>
+  <p class="quiet">
+    Anyone with this URL can join the room and chat: 
+    <code>{{ request.scheme }}://{{ request.get_host }}/{{ room.label }}</code> 
+  </p>
   <p>
     <label for="handle">Your name:</label>
     <input id="handle" type="text" placeholder="handle">

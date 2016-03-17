@@ -10,3 +10,8 @@ p.deck {
 p.deck a {
     text-decoration: none;
 }
+
+.quiet {
+    font-size: 90%;
+    color: #999;
+}
