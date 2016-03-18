@@ -5,11 +5,20 @@ $(function() {
     
     chatsock.onmessage = function(message) {
         var data = JSON.parse(message.data);
-        $("#chat").append('<tr>' 
-            + '<td>' + data.timestamp + '</td>' 
-            + '<td>' + data.handle + '</td>'
-            + '<td>' + data.message + ' </td>'
-        + '</tr>');
+        var chat = $("#chat")
+        var ele = $('<tr></tr>')
+
+        ele.append(
+            $("<td></td>").text(data.timestamp)
+        )
+        ele.append(
+            $("<td></td>").text(data.handle)
+        )
+        ele.append(
+            $("<td></td>").text(data.message)
+        )
+        
+        chat.append(ele)
     };
 
     $("#chatform").on("submit", function(event) {
