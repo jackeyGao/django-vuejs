@@ -24,8 +24,8 @@ def message_factory(settings, tmpdir):
 def test_ws_connect(message_factory):
     r = Room.objects.create(label='room1')
     message = message_factory('test',
-        path = '/chat/room1',
-        client = '10.0.0.1:12345',
+        path = b'/chat/room1',
+        client = ['10.0.0.1', 12345],
         reply_channel = u'test-reply',
     )
     ws_connect(message)
