@@ -1,5 +1,6 @@
 .cache/
 .coverage
-htmlcov
-staticfiles
-venv
+.tox/
+htmlcov/
+staticfiles/
+venv/
