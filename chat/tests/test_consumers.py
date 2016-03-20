@@ -1,28 +1,52 @@
+import json
+
 import pytest
 from asgiref.inmemory import ChannelLayer as InMemoryChannelLayer
+from channels import Group
 from channels.handler import AsgiRequest
 from channels.message import Message
+from django.contrib.sessions.backends.file import SessionStore as FileSessionStore
 
-from chat.consumers import ws_connect
+from chat.consumers import ws_connect, ws_receive
 from chat.models import Room
 
 @pytest.fixture
-def channel_layer():
-    return InMemoryChannelLayer()
+def message_factory(settings, tmpdir):
+    def factory(name, **content):
+        channel_layer = InMemoryChannelLayer()
+        message = Message(content, name, channel_layer)
+        settings.SESSION_FILE_PATH = str(tmpdir)
+        message.channel_session = FileSessionStore()
+        return message
+    return factory
 
-def make_message(channel_layer, name, **content):
-    return Message(content, name, channel_layer)
-
-
-# Ideally, I'd be able to test this without creating a Room, though that
-# would make some modification/mocking to the consumer to make that work.
 @pytest.mark.django_db
-def test_ws_connect(channel_layer):
+def test_ws_connect(message_factory):
     r = Room.objects.create(label='room1')
-    message = make_message(channel_layer, "test",
+    message = message_factory('test',
         path = '/chat/room1',
         client = '10.0.0.1:12345',
-        reply_channel = 'test-reply',
+        reply_channel = u'test-reply',
     )
     ws_connect(message)
     assert 'test-reply' in message.channel_layer._groups['chat-room1']
+    assert message.channel_session['room'] == 'room1'
+
+@pytest.mark.django_db
+def test_ws_receive(message_factory):
+    r = Room.objects.create(label='room1')
+    message = message_factory('test', 
+        text = json.dumps({'handle': 'H', 'message': 'M'})
+    )
+
+    # Normally this would happen when the person joins the room, but mock
+    # it up manually here.
+    message.channel_session['room'] = 'room1'
+    Group('chat-room1', channel_layer=message.channel_layer).add(u'test-reply')
+
+    ws_receive(message)
+
+    _, reply = message.channel_layer.receive_many([u'test-reply'])
+    reply = json.loads(reply['text'])
+    assert reply['message'] == 'M'
+    assert reply['handle'] == 'H'
