@@ -1,3 +1,5 @@
-venv
-*.pyc
+.cache/
+.coverage
+htmlcov
 staticfiles
+venv
