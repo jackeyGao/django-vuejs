@@ -7,7 +7,7 @@ from channels.handler import AsgiRequest
 from channels.message import Message
 from django.contrib.sessions.backends.file import SessionStore as FileSessionStore
 
-from chat.consumers import ws_connect, ws_receive
+from chat.consumers import ws_connect, ws_receive, ws_disconnect
 from chat.models import Room
 
 @pytest.fixture
@@ -50,3 +50,14 @@ def test_ws_receive(message_factory):
     reply = json.loads(reply['text'])
     assert reply['message'] == 'M'
     assert reply['handle'] == 'H'
+
+@pytest.mark.django_db
+def test_ws_disconnect(message_factory):
+    r = Room.objects.create(label='room1')
+    message = message_factory('test', reply_channel=u'test-reply1')
+    Group('chat-room1', channel_layer=message.channel_layer).add(u'test-reply1')
+    Group('chat-room1', channel_layer=message.channel_layer).add(u'test-reply2')
+    message.channel_session['room'] = 'room1'
+
+    ws_disconnect(message)
+    assert 'test-reply1' not in message.channel_layer._groups['chat-room1']
