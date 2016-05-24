@@ -12,5 +12,14 @@
             "generator": "secret"
         }
     },
-    "addons": ["heroku-postgresql", "heroku-redis"]
+    "addons": ["heroku-postgresql", "heroku-redis"],
+    "formation": {
+      "web": {
+        "quantity": 1,
+        "size": "Free"
+      },
+      "worker": {
+        "quantity": 1,
+        "size": "Free"
+      }
 }
