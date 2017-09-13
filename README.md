@@ -7,4 +7,5 @@ to, run:
     - `cd src; npm install`.
 - Build src, `npm run build;`
 - Start, `python manage.py runserver`
+- `http://127.0.0.1:8000'为后端渲染`， `http://127.0.0.1:8000/app/` 为前端 app.
 
