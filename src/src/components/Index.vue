@@ -11,9 +11,9 @@
 
         <div class="ui segment">
             <div class="ui selection list">
-                <div class="item">
+                <div class="item" style="padding: 1em;">
                     <div class="ui grid">
-                        <div class="two wide column">
+                        <div class="two wide column" >
                             <h3 class="ui header">#</h3>
                         </div>
                         <div class="eight wide column">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="item" v-for="room in rooms" :key="room.id">
+                <div class="item" v-for="room in rooms" :key="room.id" style="padding: 0 1em;">
                     <div class="ui grid">
                         <div class="two wide column">
                             <h3 class="ui header">{{ room.id }}</h3>
@@ -43,16 +43,19 @@
             </div>
         </div>
 
-        <h5 class="ui grey header">Or, you can visit <span class="code">http://127.0.0.1:8000/any-path-you-want</span> to create a arbitrary room or join one whose name you know.</h5>
+        <h5 class="ui grey header">Or, you can visit <span class="code">{{ root }}/any-path-you-want</span> to create a arbitrary room or join one whose name you know.</h5>
     </div>
 </template>
 
 
 <script>
+import Vue from 'vue';
+
 export default {
     data () {
         return {
-            rooms: []
+            rooms: [],
+            root: Vue.http.options.root,
         }
     },
 
@@ -79,6 +82,7 @@ export default {
 }
 
 a {
+    font-weight: normal;
     color: #5BBD72;
 }
 

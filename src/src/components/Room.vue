@@ -13,7 +13,7 @@
                 <div 
                     v-for="(message, index) in messages"
                     :key="index"
-                    style="padding: 1em 0;" 
+                    style="padding: 1em;" 
                     class="item">
                     <div class="ui grid">
                         <div class="four wide column">
