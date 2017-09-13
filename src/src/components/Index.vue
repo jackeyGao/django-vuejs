@@ -1,13 +1,20 @@
 <template>
     <div>
-        <h1 style="margin-top: 2em;font-size: 5em;">Django Channels Example</h1>
+        <h1 id="header" >Django Channels Example</h1>
 
-        <div style="margin-top: 2em; margin-bottom: 2em; font-size: 2em; line-height: 150%;"
-            class="ui">
+        <div 
+            class="description">
             This is a demo using <a href="http://channels.readthedocs.org/en/latest/">Django Channels</a> and <a href="https://cn.vuejs.org/index.html">Vue.js</a> to implement a simple WebSocket-based chat server. You can see the <a href="https://github.com/jackeyGao/django-vuejs">code on GitHub</a>, or try the app:
         </div>
 
-        <div style="font-size: 2.42857143rem;margin-bottom: 1em;" class="ui huge grey basic button" @click="createRoom">Create New Room</div>
+        <div id="buttons">
+            <div 
+                id="createButton"
+                class="ui huge grey basic button"
+                @click="createRoom">
+                Create New Room
+            </div>
+        </div>
 
         <div class="ui segment">
             <div class="ui selection list">
@@ -30,10 +37,10 @@
                         <div class="two wide column">
                             <h3 class="ui header">{{ room.id }}</h3>
                         </div>
-                        <div class="eight wide column">
+                        <div class="ten wide column">
                             {{ room.label }}
                         </div>
-                        <div class="six wide column">
+                        <div class="four wide column">
                             <router-link :to="{ name: 'room', query: { label: room.label }}">
                                  <h5 style="float: right;" class="ui green header">进入</h5>
                             </router-link>
@@ -43,7 +50,9 @@
             </div>
         </div>
 
-        <h5 class="ui grey header">Or, you can visit <span class="code">{{ root }}/any-path-you-want</span> to create a arbitrary room or join one whose name you know.</h5>
+        <div class="description">
+            Or, you can visit <span class="code">{{ root }}/any-path-you-want</span> to create a arbitrary room or join one whose name you know.
+        </div>
     </div>
 </template>
 
@@ -84,6 +93,60 @@ export default {
 a {
     font-weight: normal;
     color: #5BBD72;
+}
+
+.description {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: 2em;
+    line-height: 150%;
+}
+
+.footer {
+
+}
+
+#createButton {
+    font-size: 2.42857143rem;
+    margin-bottom: 1em;
+}
+
+#header {
+    margin-top: 2em;
+    font-size: 5em;
+}
+
+@media only screen and (max-width: 767px) {
+    #buttons {
+        text-align: center;
+    }
+
+    #createButton {
+        font-size: 0.92857143rem;
+        margin-bottom: 1em;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    #header {
+        font-size: 2em;
+    }
+
+    .description {
+        margin-top: 1em;
+        margin-bottom: 1em;
+        font-size: 1em;
+        line-height: 150%;
+        background-color: #F8F9F9;
+        margin-left: -1em!important;
+        margin-right: -1em!important;
+        padding: 1em;
+    }
+
+    .footer {
+        font-size: 1em;
+    }
 }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>ROOM: {{ $route.query.label }}</h1>
+        <h1 class="header">{{ $route.query.label }}</h1>
 
         <div v-if="messages.length > 0" class="ui segment">
             <router-link :to="{ name: 'index' }">
@@ -9,18 +9,18 @@
                 </div>
             </router-link>
 
-            <div class="ui selection list">
+            <div class="ui divided selection list">
                 <div 
                     v-for="(message, index) in messages"
                     :key="index"
                     style="padding: 1em;" 
                     class="item">
-                    <div class="ui grid">
+                    <div class="ui stackable grid">
                         <div class="four wide column">
                             {{ message.timestamp }}
                         </div>
                         <div class="eight wide column">
-                            {{ message.message }}
+                            <span style="color: #5BBD72;">{{ message.message }}</span>
                         </div>
                         <div class="two wide column">
                             {{ message.handle }}
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="ui segment">
-            <div class="ui grid">
+            <div class="ui stackable grid">
                 <div class="six wide column">
                     <div class="ui fluid labeled input">
                         <div class="ui label">
@@ -47,7 +47,7 @@
                 <div class="two wide column">
                     <button
                         @click="send"
-                        class="ui teal right labeled right floated icon button">
+                        class="ui fluid teal right labeled right floated icon button">
                       <i class="reply icon"></i>
                       Send
                   </button>
@@ -100,5 +100,12 @@ export default {
 h1, h2 {
   font-weight: bold;
   font-size: 5em;
+}
+
+@media only screen and (max-width: 767px) {
+    h1, h2 {
+     font-weight: bold;
+     font-size: 2em;
+    }
 }
 </style>
