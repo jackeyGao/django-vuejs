@@ -4,10 +4,10 @@
 
         <div style="margin-top: 2em; margin-bottom: 2em; font-size: 2em; line-height: 150%;"
             class="ui">
-            This is a demo using Django Channels and Vue.js to implement a simple WebSocket-based chat server. You can see the code on GitHub, or try the app:
+            This is a demo using <a href="http://channels.readthedocs.org/en/latest/">Django Channels</a> and <a href="https://cn.vuejs.org/index.html">Vue.js</a> to implement a simple WebSocket-based chat server. You can see the <a href="https://github.com/jackeyGao/django-vuejs">code on GitHub</a>, or try the app:
         </div>
 
-        <div style="font-size: 2.42857143rem;" class="ui huge grey basic button" @click="createRoom">Create New Room</div>
+        <div style="font-size: 2.42857143rem;margin-bottom: 1em;" class="ui huge grey basic button" @click="createRoom">Create New Room</div>
 
         <div class="ui segment">
             <div class="ui selection list">
@@ -50,25 +50,25 @@
 
 <script>
 export default {
-  data () {
-      return {
-          rooms: []
-      }
-  },
+    data () {
+        return {
+            rooms: []
+        }
+    },
 
-  methods: {
-      createRoom () {
-          this.$http.post('api/room/').then((response) => {
-              this.$router.push({name: 'room', query: {label: response.body["label"]}})
-          })
-      }
-  },
+    methods: {
+        createRoom () {
+            this.$http.post('api/room/').then((response) => {
+                this.$router.push({name: 'room', query: {label: response.body["label"]}})
+            })
+        }
+    },
 
-  mounted () {
-      this.$http.get('api/room/').then((response) => {
-          this.rooms = response.body
-      })
-  }
+    mounted () {
+        this.$http.get('api/room/').then((response) => {
+            this.rooms = response.body
+        })
+    }
 }
 </script>
 
@@ -76,6 +76,10 @@ export default {
 
 .code {
     font-family: Courier, 'Courier New', monospace!important;
+}
+
+a {
+    color: #5BBD72;
 }
 
 </style>

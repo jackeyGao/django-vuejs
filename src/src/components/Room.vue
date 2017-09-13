@@ -1,98 +1,96 @@
 <template>
-<div>
-    <h1>{{ $route.query.label }}</h1>
+    <div>
+        <h1>ROOM: {{ $route.query.label }}</h1>
 
-    <div v-if="messages.length > 0" class="ui segment">
-        <div class="ui selection list">
-            <div 
-                v-for="(message, index) in messages"
-                :key="index"
-                style="padding: 1em 0;" 
-                class="item">
-                <div class="ui grid">
-                    <div class="four wide column">
-                        {{ message.timestamp }}
-                    </div>
-                    <div class="eight wide column">
-                        {{ message.message }}
-                    </div>
-                    <div class="two wide column">
-                        {{ message.handle }}
+        <div v-if="messages.length > 0" class="ui segment">
+            <router-link :to="{ name: 'index' }">
+                <div style="position: absolute; right: 10px;" class="ui green basic button icon">
+                    <i class="home icon"></i>
+                </div>
+            </router-link>
+
+            <div class="ui selection list">
+                <div 
+                    v-for="(message, index) in messages"
+                    :key="index"
+                    style="padding: 1em 0;" 
+                    class="item">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            {{ message.timestamp }}
+                        </div>
+                        <div class="eight wide column">
+                            {{ message.message }}
+                        </div>
+                        <div class="two wide column">
+                            {{ message.handle }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="ui segment">
-        <div class="ui grid">
-            <div class="six wide column">
-                <div class="ui fluid labeled input">
-                    <div class="ui label">
-                      Handle
+        <div class="ui segment">
+            <div class="ui grid">
+                <div class="six wide column">
+                    <div class="ui fluid labeled input">
+                        <div class="ui label">
+                          Handle
+                        </div>
+                        <input v-model="handle" type="text" placeholder="Your name">
                     </div>
-                    <input v-model="handle" type="text" placeholder="Your name">
                 </div>
-            </div>
-            <div class="eight wide column">
-                <div class="ui fluid input">
-                  <input v-model="newMessage" type="text" placeholder="Message...">
+                <div class="eight wide column">
+                    <div class="ui fluid input">
+                      <input v-model="newMessage" type="text" placeholder="Message...">
+                    </div>
                 </div>
-            </div>
-            <div class="two wide column">
-                <button
-                    @click="send"
-                    class="ui teal right labeled right floated icon button">
-                  <i class="reply icon"></i>
-                  Send
-              </button>
+                <div class="two wide column">
+                    <button
+                        @click="send"
+                        class="ui teal right labeled right floated icon button">
+                      <i class="reply icon"></i>
+                      Send
+                  </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
 </template>
 
 <script>
 export default {
-  name: 'hello',
-  data () {
-    return {
-        chatsock: null,
-        messages: [],
-        handle: "",
-        newMessage: ""
-    }
-  },
-  methods: {
-      send () {
-          var message = {
-              handle: this.handle,
-              message: this.newMessage
-          }
+    data () {
+        return {
+            chatsock: null,
+            messages: [],
+            handle: "",
+            newMessage: ""
+        }
+    },
+    methods: {
+        send () {
+            var message = {
+                handle: this.handle,
+                message: this.newMessage
+            }
+            this.chatsock.send(JSON.stringify(message));
+            this.newMessage = "";
+        }
+    },
 
-          this.chatsock.send(JSON.stringify(message));
+    mounted () {
+        var url = "api/message/?limit=50&label=" + this.$route.query.label
+        this.$http.get(url).then((response) => {
+            this.messages = response.body
+        })
+        // Chat WebSocket
+        var vm = this
+        this.chatsock = new WebSocket(window.wsRoot + '/chat' + '/' + this.$route.query.label);
 
-          this.newMessage = "";
-      }
-  },
-
-  mounted () {
-      var url = "api/message/?limit=50"
-      url += '&label=' + this.$route.query.label
-
-      this.$http.get(url).then((response) => {
-          this.messages = response.body
-      })
-
-      // Chat WebSocket
-      var vm = this
-      this.chatsock = new WebSocket(window.wsRoot + '/chat' + '/' + this.$route.query.label);
-      
-      this.chatsock.onmessage = function(message) {
-          var data = JSON.parse(message.data);
-          vm.messages.push(data);
-      };
+        this.chatsock.onmessage = function(message) {
+            var data = JSON.parse(message.data);
+            vm.messages.push(data);
+        };
   }
 }
 </script>
@@ -100,15 +98,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
-  font-weight: normal;
-  font-size: 3em;
-}
-
-a {
-  color: #42b983;
-}
-
-#create {
-  margin-top: 2em;
+  font-weight: bold;
+  font-size: 5em;
 }
 </style>

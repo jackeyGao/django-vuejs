@@ -10,12 +10,12 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: Index
+      component: resolve => require(['@/components/Index'], resolve)
     },
     {
       path: '/room',
       name: 'room',
-      component: Room
+      component: resolve => require(['@/components/Room'], resolve)
     }
   ]
 })
