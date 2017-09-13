@@ -11,8 +11,13 @@
   <p>
     <a class="button button-primary" href="{% url 'new_room' %}">Create new chat room</a>
   </p>
+
+  <p>
+    <a class="button button-success" href="{% url 'app' %}">New Version</a>
+  </p>
   <p class="quiet">
     Or, you can visit <code>{{ request.scheme }}://{{ request.get_host }}/any-path-you-want</code> 
     to create a arbitrary room or join one whose name you know.
   </p>
+
 {% endblock content %}
