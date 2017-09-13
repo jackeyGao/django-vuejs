@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="ui segment">
+        <div id="roomlist" class="ui segment" >
             <div class="ui selection list">
                 <div class="item" style="padding: 1em;">
                     <div class="ui grid">
@@ -146,6 +146,14 @@ a {
 
     .footer {
         font-size: 1em;
+    }
+
+    #roomlist {
+        border: 0;
+        box-shadow: 0px 0px 0px 0px;
+        padding: 0;
+        margin: -1em;
+        margin-top: 1em;
     }
 }
 
