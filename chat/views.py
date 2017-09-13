@@ -5,8 +5,14 @@ from django.shortcuts import render, redirect
 import haikunator
 from .models import Room
 
+
+def app(request):
+    return render(request, "index.html")
+
+
 def about(request):
     return render(request, "chat/about.html")
+
 
 def new_room(request):
     """
@@ -20,6 +26,7 @@ def new_room(request):
                 continue
             new_room = Room.objects.create(label=label)
     return redirect(chat_room, label=label)
+
 
 def chat_room(request, label):
     """

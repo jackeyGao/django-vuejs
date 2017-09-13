@@ -4,3 +4,4 @@
 htmlcov/
 staticfiles/
 venv/
+*.pyc
