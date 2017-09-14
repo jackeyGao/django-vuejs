@@ -1,14 +1,15 @@
 <template>
     <div>
+        <router-link :to="{ name: 'index' }">
+            <div style="position: absolute; left: 10px; top: 10px;" class="ui green basic button icon">
+                <i class="home icon"></i>
+            </div>
+        </router-link>
         <h1 class="header">{{ $route.query.label }}</h1>
 
-        <div v-if="messages.length > 0" class="ui segment">
-            <router-link :to="{ name: 'index' }">
-                <div style="position: absolute; right: 10px;" class="ui green basic button icon">
-                    <i class="home icon"></i>
-                </div>
-            </router-link>
+        <div id="messagelist" v-if="messages.length > 0" class="ui segment">
 
+            <div class="ui mobile divider"></div>
             <div class="ui divided selection list">
                 <div 
                     v-for="(message, index) in messages"
@@ -27,24 +28,26 @@
                         </div>
                     </div>
                 </div>
+                <div class="ui mobile divider"></div>
             </div>
         </div>
-        <div class="ui segment">
+        <div id="inputhandle" class="ui segment">
             <div class="ui stackable grid">
-                <div class="six wide column">
-                    <div class="ui fluid labeled input">
-                        <div class="ui label">
-                          Handle
-                        </div>
+                <div class="six wide column nopadding">
+                    <div class="ui fluid right action left icon input">
+                        <i class="user icon"></i>
                         <input v-model="handle" type="text" placeholder="Your name">
+                        <button @click="randomName" class="ui teal icon button">
+                            <i class="refresh icon"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="eight wide column">
+                <div class="eight wide column nopadding">
                     <div class="ui fluid input">
                       <input v-model="newMessage" type="text" placeholder="Message...">
                     </div>
                 </div>
-                <div class="two wide column">
+                <div class="two wide column nopadding">
                     <button
                         @click="send"
                         class="ui fluid teal right labeled right floated icon button">
@@ -59,16 +62,37 @@
 
 <script>
 import ReconnectingWebsocket from 'reconnectingwebsocket';
+import Haikunator from 'haikunator';
+
+var STORAGE_KEY = "channels-example";
+var haikunator = new Haikunator();
+
+var Storage = {
+    fetch: function () {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    },
+    save: function (data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+};
+
 
 export default {
     data () {
         return {
             chatsock: null,
             messages: [],
-            handle: "",
+            handle: '',
             newMessage: ""
         }
     },
+
+    watch: {
+        handle (name) {
+            Storage.save({ name: name })
+        }
+    },
+
     methods: {
         send () {
             var message = {
@@ -77,6 +101,24 @@ export default {
             }
             this.chatsock.send(JSON.stringify(message));
             this.newMessage = "";
+        },
+
+        randomName () {
+            var random = haikunator.haikunate({tokenLength: 0});
+
+            this.handle = random.split('-').map(function (n) {
+                return n[0].toUpperCase()+n.substr(1);
+            }).join(' ');
+        },
+
+        whoami() {
+            var data = Storage.fetch()
+
+            if (data.name) {
+                this.handle = data.name
+            } else {
+                this.randomName()
+            }
         }
     },
 
@@ -93,6 +135,8 @@ export default {
             var data = JSON.parse(message.data);
             vm.messages.push(data);
         };
+
+        this.whoami()
   }
 }
 </script>
@@ -104,10 +148,43 @@ h1, h2 {
   font-size: 5em;
 }
 
+.mobile {
+    visibility: hidden !important;
+}
+
 @media only screen and (max-width: 767px) {
     h1, h2 {
      font-weight: bold;
      font-size: 2em;
+    }
+
+    #messagelist {
+        border: 0;
+        box-shadow: 0px 0px 0px 0px;
+        padding: 0;
+        margin: -1em;
+        margin-top: 1em;
+    }
+
+    .mobile {
+        visibility: visible !important;
+    }
+
+    #inputhandle {
+        border: 0;
+        box-shadow: 0px 0px 0px 0px;
+        padding: 0;
+        margin: -1em;
+        margin-top: 1em;
+        margin-top: 30px;
+    }
+
+    .nopadding {
+        padding: 0!important;
+    }
+
+    * {
+        border-radius: 0!important;
     }
 }
 </style>
