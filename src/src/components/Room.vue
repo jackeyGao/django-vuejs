@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import ReconnectingWebsocket from 'reconnectingwebsocket';
+
 export default {
     data () {
         return {
@@ -85,7 +87,7 @@ export default {
         })
         // Chat WebSocket
         var vm = this
-        this.chatsock = new WebSocket(window.wsRoot + '/chat' + '/' + this.$route.query.label);
+        this.chatsock = new ReconnectingWebsocket(window.wsRoot + '/chat' + '/' + this.$route.query.label);
 
         this.chatsock.onmessage = function(message) {
             var data = JSON.parse(message.data);
