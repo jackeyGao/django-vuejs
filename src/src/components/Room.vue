@@ -171,7 +171,7 @@ h1, h2 {
 }
 
 .new {
-    background-color: rgba(230, 224, 208, 0.59)!important;
+    background-color: rgba(230, 224, 208, 0.29)!important;
 }
 
 @media only screen and (max-width: 767px) {
@@ -210,7 +210,7 @@ h1, h2 {
     }
 
     .new {
-        background-color: rgba(230, 224, 208, 0.09)!important;
+        background-color: rgba(230, 224, 208, 0.29)!important;
     }
 
     * {
