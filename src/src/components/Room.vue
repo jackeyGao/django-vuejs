@@ -15,10 +15,11 @@
                     v-for="(message, index) in messages"
                     :key="index"
                     style="padding: 1em;" 
+                    :class="{new: isNew(message)}"
                     class="item">
                     <div class="ui stackable grid">
                         <div class="four wide column">
-                            {{ message.timestamp }}
+                            {{ timeFormat(message.timestamp) }}
                         </div>
                         <div class="eight wide column">
                             <span style="color: #5BBD72;">{{ message.message }}</span>
@@ -63,6 +64,7 @@
 <script>
 import ReconnectingWebsocket from 'reconnectingwebsocket';
 import Haikunator from 'haikunator';
+import moment from 'moment';
 
 var STORAGE_KEY = "channels-example";
 var haikunator = new Haikunator();
@@ -111,7 +113,7 @@ export default {
             }).join(' ');
         },
 
-        whoami() {
+        whoami () {
             var data = Storage.fetch()
 
             if (data.name) {
@@ -119,6 +121,18 @@ export default {
             } else {
                 this.randomName()
             }
+        },
+
+        timeFormat (time) {
+            return moment(moment.utc(time, 'lll')._d).format('lll')
+        },
+
+        isNew (message) {
+            var ms = moment.utc().diff(moment.utc(message.timestamp, 'lll'))
+            if (ms / 1000 < 60) {
+                return true
+            }
+            return false
         }
     },
 
@@ -152,6 +166,14 @@ h1, h2 {
     visibility: hidden !important;
 }
 
+.mobile.divider {
+    margin: 0!important;
+}
+
+.new {
+    background-color: rgba(230, 224, 208, 0.59)!important;
+}
+
 @media only screen and (max-width: 767px) {
     h1, h2 {
      font-weight: bold;
@@ -164,6 +186,10 @@ h1, h2 {
         padding: 0;
         margin: -1em;
         margin-top: 1em;
+    }
+
+    #messagelist .list {
+        margin-top: 0;
     }
 
     .mobile {
@@ -181,6 +207,10 @@ h1, h2 {
 
     .nopadding {
         padding: 0!important;
+    }
+
+    .new {
+        background-color: rgba(230, 224, 208, 0.09)!important;
     }
 
     * {
